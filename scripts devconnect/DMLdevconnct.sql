@@ -1,36 +1,45 @@
---dml
+--DML
+USE db_devconnect;
+INSERT INTO Usuario(NomeUsuario, NomeCompleto, Email, Senha, FotoPerfilUrl)
+VALUES
+(	'Mateus Latorre',
+	'mateus_latorre',
+	'mateuslatorre@gmail.com',
+	'12345ma',
+	'fotoperfilmateuslatorre.com'
+);
 
-USE db_devconnect
+SELECT * FROM Usuario;
 
---INSERIR UM REGISTRO NA TABELA USUARIO
-INSERT INTO tb_usuario (id, nomecompleto, nomeusuario, email, senha, fotoPerfilUrl)
-VALUES (1, 'Pedro Enzo Nunes De Moura', 'pedro@gmail.com', 1234, 'url.perfil');
+INSERT INTO Publicacao(Descricao,ImagemUrl,DataPublicacao,IdUsuario)
+VALUES
+(
+	'Aura 999+...',
+	'url.253635',
+	'2020-10-27',
+	1
+);
 
-SELECT * FROM tb_usuario;
+SELECT * FROM Publicacao
 
---INSERIR UM REGISTRO NA TABELA PUBLICACAO
-INSERT INTO tb_publicacao (id, descricao, imagemUrl, datapublicacao)
-VALUES (1, 'eae pessoal', 'url.com', '2025-03-25');
+INSERT INTO Curtida(IdUsuario, IdPublicacao)
+VALUES
+(1,1);
 
-SELECT * FROM  tb_publicacao;
+SELECT * FROM Curtida
 
---INSERIR UM REGISTRO NA TABELA CURTIDA
-INSERT INTO tb_curtida (id_curtida, id_usuario, id_publicacao)
-VALUES (1, 2, 3);
 
-SELECT * FROM  tb_curtida;
+INSERT INTO Comentario (Texto, DataComentario, IdPublicacao, IdUsuario)
+VALUES (
+	'Basquete rendeu hj',
+	'2025-05-18',
+	1,
+	1
+);
 
---INSERIR UM REGISTRO NA TABELA SEGUIDOR
+SELECT * FROM Comentario;
 
-INSERT INTO tb_seguidor (id_seguidor, id_usuario)
-VALUES (1,2);
+INSERT INTO Seguidor(IdUsuarioSeguidor, IdUsuarioSeguir)
+VALUES (1, 1);
 
-SELECT * FROM  tb_seguidor;
-
--- INSERIR UM REGISTRO NA TABELA COMENTARIO
-
-INSERT INTO tb_comentario (id_comentario, id_usuario, id_publicacao, texto, data_comentario)
-VALUES (1, 2, 3, 'videos legais ', '2025-5-16')
-
-SELECT * FROM 
-
+SELECT * FROM Seguidor;

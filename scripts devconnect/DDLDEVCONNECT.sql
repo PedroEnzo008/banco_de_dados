@@ -1,62 +1,49 @@
---ddl
-
-CREATE DATABASE db_devconnect;	
-
-USE db_devconnect
-
-
---TABELA USUARIO
-CREATE TABLE tb_usuario(
-	id_usuario				INT					IDENTITY				PRIMARY KEY,
-	nomecompleto	NVARCHAR(255)		NOT NULL,
-	nomeusuario		NVARCHAR(50)		UNIQUE					NOT NULL,
-	email			NVARCHAR(255)		UNIQUE					NOT NULL,
-	senha			NVARCHAR(50)		NOT NULL,		
-	fotoPerfilUrl	NVARCHAR(150)		NULL,
-);
-	SELECT * FROM tb_usuario;
-
---TABELA PUBLICACAO
-CREATE TABLE tb_publicacao(
-	id				INT					IDENTITY(1, 1)			PRIMARY KEY,
-	id_usuario		INT FOREIGN KEY		REFERENCES				tb_usuario(id),
-	descricao		NVARCHAR(255)		NOT NULL,
-	imagemUrl		NVARCHAR(255)		NOT NULL,
-	datapublicacao	DATE,
-	
-
-);
-SELECT * FROM tb_publicacao;
-
-
---TABELA CURTIDA 
-CREATE TABLE tb_curtida(
-	id				INT					IDENTITY(1, 1)			PRIMARY KEY,
-	id_usuario		INT FOREIGN KEY		REFERENCES				tb_usuario(id), 
-	id_publicacao	INT FOREIGN KEY		REFERENCES				tb_publicacao(id),
+CREATE DATABASE db_devconnect;
+GO
+CREATE TABLE Usuario(
+	Id INT IDENTITY (1, 1) PRIMARY KEY,
+	NomeUsuario		NVARCHAR(255)	UNIQUE	NOT NULL,
+	NomeCompleto	NVARCHAR(30)			NOT NULL,
+	Email			NVARCHAR(255)	UNIQUE	NOT NULL,
+	Senha			NVARCHAR(30)			NOT NULL,
+	FotoPerfilUrl	NVARCHAR(255)				NULL
 );
 
-SELECT * FROM tb_curtida;
+SELECT * FROM Usuario;
 
---TABELA SEGUIDOR 
-CREATE TABLE tb_seguidor(
-	id				INT					IDENTITY(1, 1)			PRIMARY KEY,
+CREATE TABLE Publicacao(
+	Id INT IDENTITY(1, 1) PRIMARY KEY,
+	Descricao		NVARCHAR(255) NULL,
+	ImagemUrl		NVARCHAR(150) NOT NULL,
+	DataPublicacao	DATE NOT NULL,
+	IdUsuario		INT NOT NULL FOREIGN KEY REFERENCES Usuario(id)
+);
 
-	id_usuario		INT FOREIGN	KEY REFERENCES					tb_usuario(id),
+SELECT * FROM Publicacao;
 
-	);
 
-	SELECT * FROM tb_seguidor;
+CREATE TABLE Curtida(
+    Id              INT IDENTITY (1,1) PRIMARY KEY,
+	IdUsuario		INT NOT NULL FOREIGN KEY REFERENCES Usuario(id),
+	IdPublicacao	INT NOT NULL FOREIGN KEY REFERENCES Publicacao(id)
+);
 
---TABELA COMENTARIO
+SELECT * FROM Curtida;
 
-CREATE TABLE tb_comentario (
-	id				INT							IDENTITY(1, 1)			PRIMARY KEY,
-	id_usuario		INT FOREIGN	KEY REFERENCES							tb_usuario(id),
-	id_publicacao	INT FOREIGN KEY	REFERENCES							tb_publicacao(id),
-	texto			NVARCHAR(255),
-	data_comentario DATE,
 
-	);
+CREATE TABLE Comentario(
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	IdUsuario			INT NOT NULL FOREIGN KEY REFERENCES  Usuario(Id),
+	IdPublicacao		INT NOT NULL FOREIGN KEY REFERENCES Publicacao(Id),
+	Texto				NVARCHAR(1000) NOT NULL,
+	DataComentario		DATE NOT NULL
+);
+SELECT * FROM Comentario
 
-	SELECT * FROM tb_comentario;
+CREATE TABLE Seguidor(
+	IdUsuarioSeguir		INT NOT NULL,
+	IdUsuarioSeguidor	INT NOT NULL,
+
+	PRIMARY KEY(IdUsuarioSeguir, IdUsuarioSeguidor)
+);
+SELECT * FROM Seguidor
